@@ -1,5 +1,17 @@
-__pycache__/
+# Virtual environment
+venv/
 *.pyc
+__pycache__/
+
+# Django specific
+*.sqlite3
 db.sqlite3
-media/
+
+# Environment variables
 .env
+
+# Static files
+/static/
+
+# Media files
+/media/
