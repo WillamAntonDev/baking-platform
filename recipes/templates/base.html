@@ -1,24 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Holly's Sweet Start{% endblock %}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/recipes.css' %}">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  </head>
+  <body>
     <header>
+      <div class="header-container">
+        <!-- Logo in Header -->
+        <a href="{% url 'home' %}">
+          <img src="{% static 'images/logo.png' %}" alt="Holly's Sweet Start Logo" class="logo" />
+        </a>
+        <h1>Holly's Sweet Start</h1>
+        <!-- Navigation Menu -->
         <nav>
-            <a href="/">Home</a>
-            <a href="/recipes/">Recipes</a>
+          <a href="{% url 'recipes:recipe_list' %}">Recipes</a>
+          <a href="{% url 'recipes:about' %}">About</a>
+          <a href="https://instagram.com/yourprofile" target="_blank">Instagram</a>
         </nav>
+      </div>
     </header>
     <main>
-        {% block content %}{% endblock %}
+      {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>© 2025 Holly's Sweet Start</p>
+      <p>&copy; 2025 Holly's Sweet Start</p>
     </footer>
-</body>
+  </body>
 </html>
