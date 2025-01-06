@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+<!-- Add any specific CSS for this page here if needed -->
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <h1>Welcome to Holly's Sweet Start</h1>
+  <p>Discover beginner-friendly recipes and start your baking journey today!</p>
+  <a href="{% url 'recipes:recipe_list' %}" class="btn">Browse Recipes</a>
+</div>
+
+<div class="category-grid">
+  <div class="category-card">
+    <a href="{% url 'recipes:category' category='cakes' %}">Cakes</a>
+  </div>
+  <div class="category-card">
+    <a href="{% url 'recipes:category' category='cookies' %}">Cookies</a>
+  </div>
+  <div class="category-card">
+    <a href="{% url 'recipes:category' category='pies' %}">Pies</a>
+  </div>
+</div>
+{% endblock %}

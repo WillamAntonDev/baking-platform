@@ -4,9 +4,13 @@
 <ul>
     {% for recipe in recipes %}
     <li>
-        <a href="{% url 'recipes:recipe_detail' recipe.id %}">{{ recipe.title }}</a>
+      <h2>{{ recipe.title }}</h2>
+      <a href="{% url 'recipes:recipe_detail' pk=recipe.pk %}">View Recipe</a>
+      <a href="{% url 'recipes:recipe_edit' id=recipe.id %}">Edit</a>
+      <a href="{% url 'recipes:recipe_delete' id=recipe.id %}">Delete</a>
+
     </li>
     {% endfor %}
-</ul>
-
+  </ul>
+  
 {% endblock %}

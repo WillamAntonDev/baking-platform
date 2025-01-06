@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
 <h1>{{ form.instance.id|yesno:"Edit Recipe,Create New Recipe" }}</h1>
 <form method="post" enctype="multipart/form-data">
