@@ -1,12 +1,17 @@
 from django.contrib import admin
-from .models import Recipe, Category
+from .models import Recipe, RecipeImage, Category
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'author', 'created_at')
-    list_filter = ('category', 'created_at')
+    list_display = ('title', 'category', 'author', 'is_featured')
+    list_filter = ('category', 'is_featured', 'created_at')
     search_fields = ('title', 'ingredients')
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'slug')
+    search_fields = ('name',)
+
+@admin.register(RecipeImage)
+class RecipeImageAdmin(admin.ModelAdmin):
+    list_display = ('recipe', 'image')

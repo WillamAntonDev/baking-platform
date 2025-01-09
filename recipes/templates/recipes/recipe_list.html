@@ -1,16 +1,21 @@
-{% extends "base.html" %}
-{% block content %}
-<h1>Recipes</h1>
-<ul>
+{% extends "base.html" %} {% block content %}
+<div class="recipe-list">
+  <h1>Recipes in {{ category.name }}</h1>
+  <ul>
     {% for recipe in recipes %}
     <li>
       <h2>{{ recipe.title }}</h2>
       <a href="{% url 'recipes:recipe_detail' pk=recipe.pk %}">View Recipe</a>
+      {% if user.is_authenticated and user.username == "hollyanton" %}
       <a href="{% url 'recipes:recipe_edit' id=recipe.id %}">Edit</a>
       <a href="{% url 'recipes:recipe_delete' id=recipe.id %}">Delete</a>
-
+      {% endif %}
     </li>
     {% endfor %}
   </ul>
-  
+  {% if not recipes %}
+  <p>No recipes available in this category.</p>
+  {% endif %}
+</div>
+
 {% endblock %}

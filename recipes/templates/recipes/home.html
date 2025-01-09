@@ -1,28 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block title %}Home{% endblock %}
 
-{% block extra_css %}
-<!-- Add any specific CSS for this page here if needed -->
-{% endblock %}
-
 {% block content %}
+
+<!-- Hero Section -->
 <div class="hero">
   <h1>Welcome to Holly's Sweet Start</h1>
   <p>Discover beginner-friendly recipes and start your baking journey today!</p>
-  <a href="{% url 'recipes:recipe_list' %}" class="btn">Browse Recipes</a>
 </div>
 
-<div class="category-grid">
-  <div class="category-card">
-    <a href="{% url 'recipes:category' category='cakes' %}">Cakes</a>
-  </div>
-  <div class="category-card">
-    <a href="{% url 'recipes:category' category='cookies' %}">Cookies</a>
-  </div>
-  <div class="category-card">
-    <a href="{% url 'recipes:category' category='pies' %}">Pies</a>
+<!-- Social Media-Specific Recipes Section -->
+<div class="social-recipes">
+  <h2>Featured Recipes from Social Media</h2>
+  <div class="recipe-grid">
+    {% for recipe in featured_recipes %}
+      <div class="recipe-card">
+        <a href="{% url 'recipes:recipe_detail' recipe.pk %}">
+          <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" />
+          <h3>{{ recipe.title }}</h3>
+        </a>
+      </div>
+    {% endfor %}
   </div>
 </div>
+
+<!-- Recipe Categories Section -->
+<div class="category-grid">
+  {% for category in categories %}
+    <div class="category-card">
+      <a href="{% url 'recipes:category' category.slug %}">
+        <img src="{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/default-category.jpg' %}{% endif %}" alt="{{ category.name }}" />
+        <h3>{{ category.name }}</h3>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+<!-- Browse All Recipes Button -->
+<div class="browse-recipes">
+  <a href="{% url 'recipes:recipe_list' %}" class="btn">Browse All Recipes</a>
+</div>
+
 {% endblock %}

@@ -1,16 +1,45 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends 'base.html' %}
+
+{% block title %}
+{{ recipe.title }}
+{% endblock %}
 
 {% block content %}
-<h1>{{ recipe.title }}</h1>
-{% if recipe.image %}
-  <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
-{% else %}
-  <img src="{% static 'images/default-image.jpg' %}" alt="Default Image">
-{% endif %}
-<p>{{ recipe.ingredients }}</p>
-<p>{{ recipe.instructions }}</p>
+<div class="recipe-details-container">
+    <div class="recipe-header">
+        <h1>{{ recipe.title }}</h1>
+    </div>
+    <div class="recipe-main-content">
+        <div class="recipe-text">
+            <h2>Ingredients</h2>
+            <p>{{ recipe.ingredients|linebreaks }}</p>
 
-<!-- Back to Recipes Button -->
-<a href="{% url 'recipes:recipe_list' %}" class="btn">Back to Recipes</a>
+            <h2>Instructions</h2>
+            <p>{{ recipe.instructions|linebreaks }}</p>
+        </div>
+        <div class="recipe-images">
+            {% if recipe.image %}
+                <div class="recipe-image">
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                </div>
+            {% else %}
+                <p>No main image available.</p>
+            {% endif %}
+
+            <h2>Process Images</h2>
+            {% if recipe.process_images.all %}
+                <div class="process-images">
+                    {% for image in recipe.process_images.all %}
+                        <img src="{{ image.file.url }}" alt="Process Image">
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No process images available.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="back-button">
+        <a href="{% url 'recipes:recipe_list' %}" class="btn">Back to Recipes</a>
+    </div>
+</div>
 {% endblock %}
