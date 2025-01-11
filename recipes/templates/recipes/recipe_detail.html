@@ -1,45 +1,43 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 {{ recipe.title }}
 {% endblock %}
 
 {% block content %}
-<div class="recipe-details-container">
-    <div class="recipe-header">
-        <h1>{{ recipe.title }}</h1>
+<div class="recipe-detail">
+    <!-- Left Section: Ingredients and Instructions -->
+    <div class="recipe-info">
+      <div>
+        <h2>Ingredients</h2>
+        <ul>
+          {% for ingredient in recipe.ingredients.splitlines %}
+          <li>{{ ingredient }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h2>Instructions</h2>
+        <p>{{ recipe.instructions|linebreaks }}</p>
+      </div>
     </div>
-    <div class="recipe-main-content">
-        <div class="recipe-text">
-            <h2>Ingredients</h2>
-            <p>{{ recipe.ingredients|linebreaks }}</p>
-
-            <h2>Instructions</h2>
-            <p>{{ recipe.instructions|linebreaks }}</p>
-        </div>
-        <div class="recipe-images">
-            {% if recipe.image %}
-                <div class="recipe-image">
-                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
-                </div>
-            {% else %}
-                <p>No main image available.</p>
-            {% endif %}
-
-            <h2>Process Images</h2>
-            {% if recipe.process_images.all %}
-                <div class="process-images">
-                    {% for image in recipe.process_images.all %}
-                        <img src="{{ image.file.url }}" alt="Process Image">
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p>No process images available.</p>
-            {% endif %}
-        </div>
+  
+    <!-- Right Section: Process Images -->
+    <div class="recipe-images">
+      {% if recipe.images.exists %}
+      {% for image in recipe.images.all %}
+      <img src="{{ image.image.url }}" alt="Process Image">
+      {% endfor %}
+      {% else %}
+      <p>No process images available.</p>
+      {% endif %}
     </div>
-    <div class="back-button">
-        <a href="{% url 'recipes:recipe_list' %}" class="btn">Back to Recipes</a>
-    </div>
+  </div>
+  
+  <!-- Back Button -->
+  <div class="back-to-recipes">
+    <a href="{% url 'recipes:recipe_list' %}" class="btn">Back to Recipes</a>
+  </div>
 </div>
 {% endblock %}
