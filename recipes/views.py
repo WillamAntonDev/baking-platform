@@ -12,12 +12,9 @@ def is_holly(user):
 
 
 # Home Page View
-def home_page(request):
-    recent_recipe = Recipe.objects.latest('created_at') if Recipe.objects.exists() else None
-
-    return render(request, 'recipes/home.html', {
-        'recent_recipe': recent_recipe,
-    })
+def home(request):
+    recent_recipes = Recipe.objects.order_by('-created_at')[:4]
+    return render(request, 'home.html', {'recent_recipes': recent_recipes})
 
 # Recipe List View
 from django.core.paginator import Paginator
@@ -25,7 +22,7 @@ from django.core.paginator import Paginator
 def recipe_list(request):
     query = request.GET.get('q')
     recipes = Recipe.objects.filter(title__icontains=query) if query else Recipe.objects.all()
-    paginator = Paginator(recipes, 10)
+    paginator = Paginator(recipes, 6)  # Adjust number of recipes per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     categories = Category.objects.all()
@@ -46,7 +43,7 @@ def recipe_detail(request, pk):
 @user_passes_test(is_holly)
 def recipe_edit(request, id):
     recipe = get_object_or_404(Recipe, id=id)
-    form = RecipeForm(request.POST or None, instance=recipe)
+    form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
     formset = RecipeImageFormset(request.POST or None, request.FILES or None, instance=recipe)
 
     if form.is_valid() and formset.is_valid():
@@ -57,14 +54,13 @@ def recipe_edit(request, id):
 
     return render(request, 'recipes/recipe_form.html', {'form': form, 'formset': formset})
 
-
 # Recipe by Category View
 def recipe_by_category(request, category):
     category_obj = get_object_or_404(Category, slug=category)
-    recipes = Recipe.objects.filter(category=category_obj)
-    return render(request, "recipes/recipe_list.html", {
-        "recipes": recipes,
+    recipes = Recipe.objects.filter(category=category_obj)  # Fetch recipes for the category
+    return render(request, "recipes/category.html", {
         "category": category_obj,
+        "recipes": recipes,
     })
 
 

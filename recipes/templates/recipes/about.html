@@ -1,35 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title %}About Holly{% endblock %}
+
 {% block content %}
 <div class="about-page">
   <h1>About Holly</h1>
-  <img src="{% static 'images/holly.jpg' %}" alt="Holly's Portrait" />
+  <img src="{% static 'images/holly_portrait.jpg' %}" alt="Holly's Portrait" />
   <p>
-    I am a professional baker with over 20 years of experience, dedicated to sharing my passion for baking with others.
-    My journey began in bustling kitchens under the guidance of exceptional pastry chefs in St. Petersburg, Florida,
-    Chicago, and Nashville, who instilled in me the values of patience, dedication, and creativity.
+    I am a professional baker with over 20 years of experience, dedicated to
+    sharing my passion for baking with others. My journey began in bustling kitchens
+    under the guidance of exceptional pastry chefs in St. Petersburg, Florida, Chicago,
+    and Nashville, who instilled in me the values of patience, dedication, and creativity.
   </p>
   <p>
-    Now, I'm excited to bring my expertise to a new audience through my social media platforms, including Instagram,
-    Facebook, and Threads. My mission is to make baking approachable, fun, and rewarding for everyone, whether you're
-    creating your first loaf of bread or dreaming of opening your own bakery.
-  </p>
-
-  <h2 class="section-title">Our Mission</h2>
-  <p>
-    Our goal is to make baking fun, accessible, and stress-free. Whether you're a novice or a seasoned baker, you'll find
-    recipes and tips to suit your needs.
+    Now, I'm excited to bring my expertise to a new audience through my social media platforms,
+    including Instagram, Facebook, and Threads. My mission is to make baking approachable, fun,
+    and rewarding for everyone, whether you're creating your first loaf of bread or dreaming of
+    opening your own bakery.
   </p>
 
-  <h2 class="section-title">Connect with Us</h2>
-  <p>
-    Follow us on social media to stay up-to-date with the latest recipes, baking tips, and more!
-  </p>
-  <div class="social-links">
-    <a href="https://instagram.com" target="_blank">Instagram</a>
-    <a href="https://facebook.com" target="_blank">Facebook</a>
-    <a href="https://threads.net" target="_blank">Threads</a>
+  <div class="mission-section">
+    <h2>Our Mission</h2>
+    <p>
+      Our goal is to make baking fun, accessible, and stress-free. Whether you're a novice or a
+      seasoned baker, you'll find recipes and tips to suit your needs.
+    </p>
   </div>
-</div>
+
 {% endblock %}

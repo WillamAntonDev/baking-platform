@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero">
+  <div class="hero-content">
+    <h2>Learn to Bake, Love the Journey!</h2>
+  </div>
+  <div class="hero-image">
+    <img
+      src="{% static 'images/baking_illustration.jpg' %}"
+      alt="Colorful pastries illustration"
+    />
+  </div>
+</div>
+
+<!-- Latest Recipes Section -->
+<div class="homepage-content">
+  <h2 class="section-title">Our Latest Recipes</h2>
+  <div class="recipe-grid">
+    {% for recipe in recent_recipes %}
+    <div class="recipe-card">
+      <a href="{% url 'recipes:recipe_detail' recipe.pk %}">
+        <img
+          src="{% if recipe.image %}{{ recipe.image.url }}{% else %}{% static 'images/default-recipe.jpg' %}{% endif %}"
+          alt="{{ recipe.title }}"
+        />
+        <h3>{{ recipe.title }}</h3>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

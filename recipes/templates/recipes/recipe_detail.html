@@ -1,43 +1,40 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}
-{{ recipe.title }}
-{% endblock %}
+{% block title %}{{ recipe.title }}{% endblock %}
 
 {% block content %}
 <div class="recipe-detail">
-    <!-- Left Section: Ingredients and Instructions -->
+  <!-- Recipe Content Wrapper -->
+  <div class="recipe-wrapper">
+    <!-- Ingredients and Instructions Column -->
     <div class="recipe-info">
-      <div>
+      <div class="ingredients card">
         <h2>Ingredients</h2>
-        <ul>
-          {% for ingredient in recipe.ingredients.splitlines %}
-          <li>{{ ingredient }}</li>
-          {% endfor %}
-        </ul>
+        <p>{{ recipe.ingredients|linebreaks }}</p>
       </div>
-      <div>
+      <div class="instructions card">
         <h2>Instructions</h2>
         <p>{{ recipe.instructions|linebreaks }}</p>
       </div>
     </div>
-  
-    <!-- Right Section: Process Images -->
+
+    <!-- Recipe Images Column -->
     <div class="recipe-images">
-      {% if recipe.images.exists %}
-      {% for image in recipe.images.all %}
-      <img src="{{ image.image.url }}" alt="Process Image">
-      {% endfor %}
+      <!-- Main Recipe Image -->
+      {% if recipe.image %}
+      <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="main-image" />
       {% else %}
-      <p>No process images available.</p>
+      <img src="{% static 'images/default-recipe.jpg' %}" alt="Default Recipe Image" class="main-image" />
       {% endif %}
+
+      <!-- Additional Images -->
+      <div class="additional-images">
+        {% for image in recipe.images.all %}
+        <img src="{{ image.image.url }}" alt="Recipe Image" class="additional-image" />
+        {% endfor %}
+      </div>
     </div>
-  </div>
-  
-  <!-- Back Button -->
-  <div class="back-to-recipes">
-    <a href="{% url 'recipes:recipe_list' %}" class="btn">Back to Recipes</a>
   </div>
 </div>
 {% endblock %}
