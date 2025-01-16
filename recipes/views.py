@@ -17,7 +17,7 @@ def home(request):
     return render(request, 'home.html', {'recent_recipes': recent_recipes})
 
 # Recipe List View
-from django.core.paginator import Paginator
+
 
 def recipe_list(request):
     query = request.GET.get('q')
