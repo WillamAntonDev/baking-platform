@@ -13,8 +13,8 @@ def is_holly(user):
 
 # Home Page View
 def home(request):
-    recent_recipes = Recipe.objects.order_by('-created_at')[:4]
-    return render(request, 'home.html', {'recent_recipes': recent_recipes})
+    recipes = Recipe.objects.all()
+    return render(request, 'home.html', {'recipes': recipes})
 
 # Recipe List View
 

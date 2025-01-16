@@ -40,6 +40,15 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def main_image(self):
+        main_image = self.images.filter(is_main_image=True).first()  # Get the main image
+        if main_image:
+            print(f"Main image found for {self.title}: {main_image.image.url}")
+            return main_image.image.url  # Return the URL of the main image
+        print(f"No main image found for {self.title}")
+        return None  # No main image exists
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)

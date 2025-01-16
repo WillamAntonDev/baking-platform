@@ -1,8 +1,4 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}Home{% endblock %}
-
+{% extends "base.html" %} {% load static %} {% block title %}Home{% endblock %}
 {% block content %}
 <!-- Hero Section -->
 <div class="hero">
@@ -22,15 +18,20 @@
   <h2 class="section-title">Our Latest Recipes</h2>
   <div class="recipe-grid">
     {% for recipe in recipes %}
-        <div class="recipe-card">
-            {% if recipe.main_image %}
-                <img src="{{ recipe.main_image.image.url }}" alt="{{ recipe.title }}">
-            {% else %}
-                <img src="{% static 'images/default-recipe.jpg' %}" alt="Default Recipe">
-            {% endif %}
-            <h3>{{ recipe.title }}</h3>
-        </div>
+    <div class="recipe-card">
+      <a href="{% url 'recipes:recipe_detail' recipe.id %}">
+        {% if recipe.main_image %}
+        <img src="{{ recipe.main_image }}" alt="{{ recipe.title }}" />
+        {% else %}
+        <img
+          src="{% static 'images/default-recipe.jpg' %}"
+          alt="Default Recipe"
+        />
+        {% endif %}
+      </a>
+      <h3>{{ recipe.title }}</h3>
+    </div>
     {% endfor %}
-</div>
+  </div>
 </div>
 {% endblock %}
