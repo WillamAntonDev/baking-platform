@@ -13,24 +13,24 @@ def is_holly(user):
 
 # Home Page View
 def home(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.all().order_by('-created_at')  # Order recipes by creation date
     return render(request, 'home.html', {'recipes': recipes})
 
+
 # Recipe List View
-
-
 def recipe_list(request):
     query = request.GET.get('q')
-    recipes = Recipe.objects.filter(title__icontains=query) if query else Recipe.objects.all()
+    recipes = Recipe.objects.filter(title__icontains=query).order_by('-created_at') if query else Recipe.objects.all().order_by('-created_at')
     paginator = Paginator(recipes, 6)  # Adjust number of recipes per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    categories = Category.objects.all()
+    categories = Category.objects.all().order_by('name')  # Order categories alphabetically
 
     return render(request, 'recipes/recipe_list.html', {
         'page_obj': page_obj,
         'categories': categories,
     })
+
 
 # Recipe Detail View
 def recipe_detail(request, pk):
@@ -54,13 +54,18 @@ def recipe_edit(request, id):
 
     return render(request, 'recipes/recipe_form.html', {'form': form, 'formset': formset})
 
+
 # Recipe by Category View
 def recipe_by_category(request, category):
-    category_obj = get_object_or_404(Category, slug=category)
-    recipes = Recipe.objects.filter(category=category_obj)  # Fetch recipes for the category
-    return render(request, "recipes/category.html", {
-        "category": category_obj,
-        "recipes": recipes,
+    category = get_object_or_404(Category, slug=category)
+    recipes = Recipe.objects.filter(category=category).order_by('-created_at')  # Order recipes in category
+    paginator = Paginator(recipes, 6)  # Adjust number of recipes per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'recipes/recipe_by_category.html', {
+        'category': category,
+        'page_obj': page_obj,
     })
 
 

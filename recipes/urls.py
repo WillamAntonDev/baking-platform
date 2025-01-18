@@ -9,5 +9,7 @@ urlpatterns = [
     path("<int:id>/edit/", views.recipe_edit, name="recipe_edit"),  # Edit recipe by ID
     path("<int:id>/delete/", views.recipe_delete, name="recipe_delete"),  # Delete recipe by ID
     path("about/", views.about_page, name="about"),  # About page
-    path("category/<slug:category>/", views.recipe_by_category, name="category"),  # Recipes by category slug
+    path("category/<slug:category>/", views.recipe_by_category, name="recipe_by_category"),
+
+  # Recipes by category slug
 ]

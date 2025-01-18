@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ category.name }} Recipes{% endblock %}
+
+{% block content %}
+<h2>{{ category.name }}</h2>
+
+<div class="recipe-grid">
+    {% for recipe in recipes %}
+        <div class="recipe-card">
+            <a href="{% url 'recipes:recipe_detail' recipe.id %}">
+                {% if recipe.main_image %}
+                    <img src="{{ recipe.main_image }}" alt="{{ recipe.title }}">
+                {% else %}
+                    <img src="{% static 'images/default-recipe.jpg' %}" alt="Default Recipe">
+                {% endif %}
+            </a>
+            <h3>{{ recipe.title }}</h3>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

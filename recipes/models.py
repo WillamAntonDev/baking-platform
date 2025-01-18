@@ -42,12 +42,15 @@ class Recipe(models.Model):
 
     @property
     def main_image(self):
-        main_image = self.images.filter(is_main_image=True).first()  # Get the main image
-        if main_image:
-            print(f"Main image found for {self.title}: {main_image.image.url}")
-            return main_image.image.url  # Return the URL of the main image
-        print(f"No main image found for {self.title}")
-        return None  # No main image exists
+        # Prioritize RecipeImage main image
+        main_image_obj = self.images.filter(is_main_image=True).first()
+        if main_image_obj:
+            return main_image_obj.image.url
+        # Fallback to Recipe image field
+        if self.image:
+            return self.image.url
+        # Default static image
+        return None
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -56,7 +59,6 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
-
 
 class RecipeImage(models.Model):
     recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE, related_name='images')
