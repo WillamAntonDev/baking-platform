@@ -4,20 +4,50 @@
 {% block title %}{{ category.name }} Recipes{% endblock %}
 
 {% block content %}
-<h2>{{ category.name }}</h2>
+<h1 class="category-title">{{ category.name }}</h1>
 
+<!-- Show Recipes or Empty State -->
+{% if page_obj %}
 <div class="recipe-grid">
-    {% for recipe in recipes %}
-        <div class="recipe-card">
-            <a href="{% url 'recipes:recipe_detail' recipe.id %}">
-                {% if recipe.main_image %}
-                    <img src="{{ recipe.main_image }}" alt="{{ recipe.title }}">
-                {% else %}
-                    <img src="{% static 'images/default-recipe.jpg' %}" alt="Default Recipe">
-                {% endif %}
-            </a>
-            <h3>{{ recipe.title }}</h3>
-        </div>
-    {% endfor %}
+  {% for recipe in page_obj %}
+  <div class="recipe-card">
+    <a href="{% url 'recipes:recipe_detail' recipe.id %}">
+      {% if recipe.main_image %}
+      <img
+        src="{{ recipe.main_image }}"
+        alt="{{ recipe.title }}"
+        class="recipe-image"
+      />
+      {% else %}
+      <img
+        src="{% static 'images/default-recipe.jpg' %}"
+        alt="Default Recipe"
+        class="recipe-image"
+      />
+      {% endif %}
+    </a>
+    <h3 class="recipe-title">{{ recipe.title }}</h3>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p class="empty-state">
+  No recipes found in this category. Please check back later!
+</p>
+{% endif %}
+
+<!-- Pagination -->
+<div class="pagination">
+  {% if page_obj.has_previous %}
+  <a href="?page=1">&laquo; First</a>
+  <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+  {% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}">Next</a>
+  <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+  {% endif %}
 </div>
 {% endblock %}

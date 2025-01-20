@@ -63,13 +63,13 @@ class Recipe(models.Model):
 class RecipeImage(models.Model):
     recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='recipe_images/')
+    step_number = models.PositiveIntegerField(blank=True, null=True)  # Link to a specific instruction step
     is_main_image = models.BooleanField(default=False)  # Field to mark the main image
 
     def save(self, *args, **kwargs):
         # Ensure only one image is the main image per recipe
         if self.is_main_image:
             RecipeImage.objects.filter(recipe=self.recipe, is_main_image=True).update(is_main_image=False)
-        
         super().save(*args, **kwargs)  # Save the image first
         RecipeImage.fix_image_orientation(self.image.path)  # Fix orientation after saving
 
@@ -95,4 +95,5 @@ class RecipeImage(models.Model):
             print(f"Error processing image {image_path}: {e}")
 
     def __str__(self):
-        return f"{self.recipe.title} - {'Main Image' if self.is_main_image else 'Additional Image'}"
+        return f"{self.recipe.title} - {'Main Image' if self.is_main_image else 'Additional Image (Step: ' + str(self.step_number) + ')'}"
+

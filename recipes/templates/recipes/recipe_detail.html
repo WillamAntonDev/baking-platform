@@ -3,6 +3,9 @@
 {% block title %}{{ recipe.title }}{% endblock %}
 {% block content %}
 <div class="recipe-detail">
+  <!-- Recipe Title -->
+  <h1 class="recipe-title">{{ recipe.title }}</h1>
+
   <!-- Recipe Content Wrapper -->
   <div class="recipe-wrapper">
     <!-- Ingredients and Instructions Column -->
@@ -19,22 +22,19 @@
 
     <!-- Recipe Images Column -->
     <div class="recipe-images">
+      <!-- Main Image -->
       {% if recipe.main_image %}
       <img src="{{ recipe.main_image }}" alt="{{ recipe.title }}" class="main-image">
       {% else %}
       <img src="{% static 'images/default-recipe.jpg' %}" alt="Default Recipe" class="main-image">
       {% endif %}
-    </div>
 
-    <!-- Additional Images -->
-    <div class="additional-images">
-      {% for image in recipe.images.all %}
-      <img
-        src="{{ image.image.url }}"
-        alt="Recipe Image"
-        class="additional-image"
-      />
-      {% endfor %}
+      <!-- Additional Images -->
+      <div class="additional-images">
+        {% for image in recipe.images.all %}
+        <img src="{{ image.image.url }}" alt="Additional Recipe Image" class="additional-image">
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
