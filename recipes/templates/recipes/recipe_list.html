@@ -1,60 +1,65 @@
-{% extends "base.html" %} {% load static %} {% block title %} All Recipes {% endblock %} {% block content %}
-<!-- Search Bar -->
-<div class="search-bar">
-  <form method="GET" action="{% url 'recipes:recipe_list' %}">
-    <input
-      type="text"
-      name="q"
-      placeholder="Search recipes..."
-      value="{{ request.GET.q }}"
-    />
-    <button type="submit">Search</button>
-  </form>
-</div>
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %} All Recipes {% endblock %} 
 
-<!-- Category Grid -->
-<div class="category-grid">
-  {% for category in categories %}
-  <a
-    href="{% url 'recipes:recipe_by_category' category.slug %}"
-    class="category-card"
-  >
-    <div class="category-card-content">
-      {% if category.image %}
-      <img src="{{ category.image.url }}" alt="{{ category.name }}" />
-      {% else %}
-      <img
-        src="{% static 'images/default-category.jpg' %}"
-        alt="{{ category.name }}"
+{% block content %}
+<section class="category-section">
+  <h3 class="section-heading">Recipe Categories</h3>
+  <div class="search-bar">
+    <form method="GET" action="{% url 'recipes:recipe_list' %}">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search recipes..."
+        value="{{ request.GET.q }}"
       />
-      {% endif %}
-      <h3>{{ category.name }}</h3>
-    </div>
-  </a>
-  {% endfor %}
-</div>
-
-<!-- All Recipes Section -->
-<h2>All Recipes</h2>
-<div class="recipe-grid">
-  {% for recipe in page_obj %}
-  <div class="recipe-card">
-    <a href="{% url 'recipes:recipe_detail' recipe.id %}">
-      {% if recipe.main_image %}
-      <img src="{{ recipe.main_image }}" alt="{{ recipe.title }}" />
-      {% else %}
-      <img
-        src="{% static 'images/default-recipe.jpg' %}"
-        alt="Default Recipe"
-      />
-      {% endif %}
-    </a>
-    <h3>{{ recipe.title }}</h3>
+      <button type="submit">Search</button>
+    </form>
   </div>
-  {% endfor %}
-</div>
 
-<!-- Pagination -->
+  <div class="category-grid">
+    {% for category in categories %}
+    <a
+      href="{% url 'recipes:recipe_by_category' category.slug %}"
+      class="category-card"
+    >
+      <div class="category-card-content">
+        {% if category.image %}
+        <img src="{{ category.image.url }}" alt="{{ category.name }}" />
+        {% else %}
+        <img
+          src="{% static 'images/default-category.jpg' %}"
+          alt="{{ category.name }}"
+        />
+        {% endif %}
+        <h3>{{ category.name }}</h3>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="recipe-section">
+  <h2 class="section-heading">All Recipes</h2>
+  <div class="recipe-grid">
+    {% for recipe in page_obj %}
+    <div class="recipe-card">
+      <a href="{% url 'recipes:recipe_detail' recipe.id %}">
+        {% if recipe.main_image %}
+        <img src="{{ recipe.main_image }}" alt="{{ recipe.title }}" />
+        {% else %}
+        <img
+          src="{% static 'images/default-recipe.jpg' %}"
+          alt="Default Recipe"
+        />
+        {% endif %}
+        <h3>{{ recipe.title }}</h3>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
 <div class="pagination">
   {% if page_obj.has_previous %}
   <a href="?page=1">&laquo; First</a>

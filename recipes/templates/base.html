@@ -5,14 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Holly's Sweet Start{% endblock %}</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/styles_test.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/styles_test.css' %}" />
   </head>
   <body>
     <div class="wrapper">
       <!-- Header Section -->
       <header>
+        <a href="{% url 'home' %}" class="logo">Holly's Sweet Start</a>
         <nav>
           <div class="nav-links">
             <a href="{% url 'home' %}">Home</a>
@@ -23,16 +27,31 @@
       </header>
 
       <!-- Main Content -->
-      <main>{% block content %}{% endblock %}</main>
+      <main class="main-content">{% block content %}{% endblock %}</main>
     </div>
 
     <!-- Footer Section -->
     <footer>
       <p>&copy; 2025 Holly's Sweet Start</p>
       <div class="social-links">
-        <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://facebook.com/yourprofile" target="_blank" rel="noopener noreferrer">Facebook</a>
-        <a href="https://twitter.com/yourprofile" target="_blank" rel="noopener noreferrer">Twitter</a>
+        <a
+          href="https://instagram.com/yourprofile"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Instagram</a
+        >
+        <a
+          href="https://facebook.com/yourprofile"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Facebook</a
+        >
+        <a
+          href="https://twitter.com/yourprofile"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Twitter</a
+        >
       </div>
     </footer>
   </body>
