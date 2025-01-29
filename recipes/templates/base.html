@@ -11,7 +11,10 @@
     />
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <link rel="stylesheet" href="{% static 'css/styles_test.css' %}" />
+    {% block extra_styles %}
+    {% endblock %}
   </head>
+  
   <body>
     <div class="wrapper">
       <!-- Header Section -->
